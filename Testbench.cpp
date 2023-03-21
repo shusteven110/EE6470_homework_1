@@ -160,24 +160,22 @@ void Testbench::do_sobel() {
       else{
         o_buffer.write(true);
         for (v = -yBound; v != yBound + adjustY; ++v) {   //-1, 0, 1
-          for (u = xBound; u != xBound + adjustX; ++u) {  // 1
-            if (x + u >= 0 && x + u < width && y + v >= 0 && y + v < height) {
-              R = *(source_bitmap +
-                    bytes_per_pixel * (width * (y + v) + (x + u)) + 2);
-              G = *(source_bitmap +
-                    bytes_per_pixel * (width * (y + v) + (x + u)) + 1);
-              B = *(source_bitmap +
-                    bytes_per_pixel * (width * (y + v) + (x + u)) + 0);
-            } else {
-              R = 0;
-              G = 0;
-              B = 0;
-            }
-            o_r.write(R);
-            o_g.write(G);
-            o_b.write(B);
-            wait(1); //emulate channel delay
+          if (x + u >= 0 && x + u < width && y + v >= 0 && y + v < height) {
+            R = *(source_bitmap +
+                  bytes_per_pixel * (width * (y + v) + (x + u)) + 2);
+            G = *(source_bitmap +
+                  bytes_per_pixel * (width * (y + v) + (x + u)) + 1);
+            B = *(source_bitmap +
+                  bytes_per_pixel * (width * (y + v) + (x + u)) + 0);
+          } else {
+            R = 0;
+            G = 0;
+            B = 0;
           }
+          o_r.write(R);
+          o_g.write(G);
+          o_b.write(B);
+          wait(1); //emulate channel delay
         }
       }
 
